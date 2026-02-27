@@ -1,7 +1,8 @@
+"use client";
+
 import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
-
-// const socket =io();
+let socket;
 
 export default function ChatAppInterface() {
 
@@ -14,11 +15,32 @@ export default function ChatAppInterface() {
         setmessages(JSON.parse(savedMessages));
         }
     }, []);
+
+
+   useEffect(() => {
+    const initSocket = async () => {
+      await fetch("/api/server"); 
+
+      socket = io();
+
+      socket.on("chat-message", (msg) => {
+        setmessages((prev) => [...prev, msg]);
+      });
+    };
+
+    initSocket();
+
+    return () => {
+      if (socket) socket.disconnect();
+    };
+  }, []);
+
     
     function saveMessage(){
-
-       const newMessage ={text:message,time:new Date().toLocaleTimeString() };
+      if(!message.trim(""))return
+      const newMessage ={text:message,time:new Date().toLocaleTimeString() };
        setmessages(prev=>[...prev,newMessage])
+      socket.emit("chat-message", newMessage); 
        setmessage("")
     }
     
@@ -44,7 +66,7 @@ export default function ChatAppInterface() {
                 <div className="w-full">
                {item.text}
                 </div>
-                <div className="w-15 text-sm mt-4">
+                <div className="w-14 text-sm mt-4">
                {item.time}
                 </div>
             </div>
