@@ -57,7 +57,7 @@ return(
 
       {allUsers && allUsers.length > 0 ? (
         allUsers.map((user) => (
-            <Link key={user.name} href={`/privateChats/${user.name}`}>
+            <Link key={user.name}  href={`/privateChats/${user.name}`}>
             <div className="flex items-center justify-between px-5 py-4 shadow-sm cursor-pointer hover:bg-gray-100 transition">
                 <div className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-blue-500 text-white flex items-center justify-center rounded-full font-semibold">
