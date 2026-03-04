@@ -10,7 +10,6 @@ export default function handler(_req, res) {
 
     io.on("connection", (socket) => {//naye connection kai liye
       console.log("User connected");
-
       
       socket.on("chat-message", (msg) => { //client se kuvh receive krne kai liye 
         io.emit("chat-message", msg);  // sb connected clients to broadcast krne kai liye

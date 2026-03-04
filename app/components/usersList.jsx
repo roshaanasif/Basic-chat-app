@@ -25,15 +25,11 @@ const users=[
 
 export default function GettingUsers() {
    const [allUsers,setUsers]=useState([])
-    
-useEffect(()=>{
-    localStorage.setItem("users", JSON.stringify(users)); 
-     
-},[])
+
 
 
 useEffect(()=>{
-    let usersData=JSON.parse(localStorage.getItem("users")||[]);
+    let usersData=JSON.parse(localStorage.getItem("users")||users);
 
     setUsers(usersData)
 },[])
@@ -47,11 +43,19 @@ return(
 
       <div className="w-96 h-150 bg-white shadow-xl rounded-xl flex flex-col">
 
-        <div className="px-5 py-4 border-b-2">
+        <div className="flex justify-between px-5 py-4 border-b-2">
           <h1 className="text-xl font-semibold">Users</h1>
-        </div>
+    
 
-       
+        <Link href="/createRooms">
+        <button className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600">
+            Create / Join Room
+        </button>
+        </Link>
+
+        </div>
+      
+
         <div className="flex-1 overflow-y-auto">
             
 
